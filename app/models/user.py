@@ -31,4 +31,4 @@ class User(Base):
     boats = relationship("Boat", back_populates="owner")
     logs = relationship("FishingLog", back_populates="owner")
     trips = relationship("Trip", back_populates="owner")
-    reservations = relationship("Reservation", back_populates="owner")
+    bookings = relationship("Booking", back_populates="owner")
