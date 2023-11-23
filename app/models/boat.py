@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date, Enum, Float, ForeignKey, TIMESTAMP, Boolean, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.sqlite import JSON
-from .database import Base
+from ..database import Base
 import datetime
 
 class Boat(Base):

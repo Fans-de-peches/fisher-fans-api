@@ -3,6 +3,14 @@ from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
 
+class TripTypeEnum(str, Enum):
+    peche = "daily"
+    promenade = "recurrent"
+
+class CostTypeEnum(str, Enum):
+    peche = "global"
+    promenade = "person"
+
 # Trip Schemas
 class TripBase(BaseModel):
     title: str
@@ -27,7 +35,7 @@ class Trip(TripBase):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TripList(BaseModel):
     items: List[Trip]
