@@ -4,8 +4,8 @@ from sqlalchemy.dialects.sqlite import JSON
 from .database import Base
 import datetime
 
-class Reservation(Base):
-    __tablename__ = "reservation"
+class Booking(Base):
+    __tablename__ = "booking"
 
     reservation_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     trip_id = Column(Integer, ForeignKey('trip.trip_id'))
