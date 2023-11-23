@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from .user_route import router as user_router
-# Importe d'autres routeurs ici si nécessaire
+from .boat_route import router as boat_router
 
 router = APIRouter()
 router.include_router(user_router)
-# Inclut d'autres routeurs ici
+router.include_router(boat_router)

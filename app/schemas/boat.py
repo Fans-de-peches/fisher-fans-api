@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
@@ -29,7 +29,7 @@ class BoatBase(BaseModel):
     name: str
     description: Optional[str]
     manufacturer: Optional[str]
-    birth_date: Optional[str]
+    birth_date: Optional[date]
     image: Optional[str]
     license_type: LicenseTypeEnum
     boat_type: BoatTypeEnum
@@ -45,7 +45,15 @@ class BoatBase(BaseModel):
     boat_status: BoatStatusEnum
 
 class BoatCreate(BoatBase):
-    pass
+    birth_date: Optional[str]
+
+    @validator('birth_date', pre=True)
+    def validate_birth_date(cls, value):
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return value
+        except ValueError:
+            raise ValueError("Invalid birth_date format")
 
 class BoatUpdate(BoatBase):
     pass

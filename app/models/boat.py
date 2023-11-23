@@ -28,5 +28,4 @@ class Boat(Base):
     boat_status = Column(Enum('active', 'disable'))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.datetime.utcnow)
-
     owner = relationship("User", back_populates="boats")

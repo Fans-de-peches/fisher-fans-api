@@ -28,8 +28,9 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     total = db.query(models.User).count()
     return users, total
 
-def update_user(db: Session, user_id: int, user: schemas.UserUpdate):
+def update_user(db: Session, id: int, user: schemas.UserUpdate):
     ...
+
 
 def delete_user(db: Session, user_id: int):
     user = db.query(models.User).filter(models.User.user_id == user_id).first()
