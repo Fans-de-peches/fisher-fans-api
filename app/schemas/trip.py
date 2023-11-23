@@ -30,9 +30,9 @@ class TripUpdate(TripBase):
     pass
 
 class Trip(TripBase):
-    id: int
+    trip_id: int
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime]
 
     class Config:
         from_attributes = True

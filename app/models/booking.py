@@ -7,7 +7,7 @@ import datetime
 class Booking(Base):
     __tablename__ = "booking"
 
-    reservation_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    booking_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     trip_id = Column(Integer, ForeignKey('trip.trip_id'))
     date_ = Column(Date)
     reserved_users = Column(Integer)
@@ -16,4 +16,4 @@ class Booking(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.datetime.utcnow)
 
-    owner = relationship("User", back_populates="reservations")
+    owner = relationship("User", back_populates="bookings")

@@ -37,9 +37,9 @@ class UserUpdate(UserBase):
     password: Optional[str]
 
 class User(UserBase):
-    id: int
+    user_id: int
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime]
 
     class Config:
         from_attributes = True

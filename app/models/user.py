@@ -27,6 +27,7 @@ class User(Base):
     siret_number = Column(String)
     commerce_registry_number = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.utcnow)
 
     boats = relationship("Boat", back_populates="owner")
     logs = relationship("FishingLog", back_populates="owner")

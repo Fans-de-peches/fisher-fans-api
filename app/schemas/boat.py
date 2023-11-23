@@ -51,9 +51,9 @@ class BoatUpdate(BoatBase):
     pass
 
 class Boat(BoatBase):
-    id: int
+    boat_id: int
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime]
 
     class Config:
         from_attributes = True

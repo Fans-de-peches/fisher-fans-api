@@ -18,9 +18,9 @@ class BookingUpdate(BookingBase):
     pass
 
 class Booking(BookingBase):
-    id: int
+    booking_id: int
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime]
 
     class Config:
         from_attributes = True
