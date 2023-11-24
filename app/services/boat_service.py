@@ -7,8 +7,14 @@ from datetime import datetime
 def create_boat(db: Session, boat: schemas.BoatCreate):
     try:
         boat_data = boat.dict()
+        user = db.query(models.User).filter(models.User.user_id == boat.owner_id).first()
+        
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
         if boat_data.get("birth_date"):
             boat_data["birth_date"] = datetime.strptime(boat_data["birth_date"], "%Y-%m-%d").date()
+        
         db_boat = models.Boat(**boat_data)
         db.add(db_boat)
         db.commit()

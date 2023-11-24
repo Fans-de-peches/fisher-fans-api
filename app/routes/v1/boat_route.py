@@ -13,6 +13,14 @@ def create_boat(boat: schemas.BoatCreate, db: Session = Depends(database.get_db)
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
+# TODO finir la route update_boat
+@router.put("/{id}", response_model=schemas.Boat)
+def update_boat(id: int, boat: schemas.BoatCreate, db: Session = Depends(database.get_db)):
+    try:
+        return boat_service.update_boat(db, id, boat)
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
 @router.get("/", response_model=schemas.BoatList)
 def get_boats(skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db)):
     boats, total = boat_service.get_boats(db, skip, limit)

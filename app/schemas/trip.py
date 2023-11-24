@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
@@ -24,7 +24,22 @@ class TripBase(BaseModel):
     owner_id: int
 
 class TripCreate(TripBase):
-    pass
+    date: Optional[List[str]]  # Accepte une chaîne JSON représentant une liste de dates
+    hours: Optional[List[str]]  # Accepte une chaîne JSON représentant une liste d'heures
+
+    @validator('date')
+    def validate_date(cls, v):
+        if v:
+            return v
+        else:
+            return []
+    
+    @validator('hours')
+    def validate_hours(cls, v):
+        if v:
+            return v
+        else:
+            return []
 
 class TripUpdate(TripBase):
     pass

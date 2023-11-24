@@ -13,11 +13,10 @@ class Trip(Base):
     trip_type = Column(Enum('daily', 'recurrent'))
     cost_type = Column(Enum('global', 'person'))
     date = Column(JSON)
-    # Assuming hours is an JSON)
     hours = Column(JSON)
     capacity = Column(Integer)
     cost = Column(Float)
     owner_id = Column(Integer, ForeignKey('user.user_id'))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-
+    updated_at = Column(DateTime, onupdate=datetime.datetime.utcnow)
     owner = relationship("User", back_populates="trips")

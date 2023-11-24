@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
@@ -6,13 +6,21 @@ from enum import Enum
 # Booking Schemas
 class BookingBase(BaseModel):
     trip_id: int
-    date_: str
+    date: date
     reserved_users: int
     total_cost: float
     owner_id: int
 
 class BookingCreate(BookingBase):
-    pass
+    date: Optional[str]
+    
+    @validator('date', pre=True)
+    def validate_date(cls, value):
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return value
+        except ValueError:
+            raise ValueError("Invalid date format")
 
 class BookingUpdate(BookingBase):
     pass

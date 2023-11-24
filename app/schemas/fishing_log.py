@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
@@ -12,11 +12,19 @@ class FishingLogBase(BaseModel):
     height: float
     weight: float
     fishing_place: str
-    fishing_date: str
+    fishing_date: date
     leaved: bool
 
 class FishingLogCreate(FishingLogBase):
-    pass
+    fishing_date: Optional[str]
+
+    @validator('fishing_date', pre=True)
+    def validate_fishing_date(cls, value):
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return value
+        except ValueError:
+            raise ValueError("Invalid fishing_date format")
 
 class FishingLogUpdate(FishingLogBase):
     pass
