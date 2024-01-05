@@ -8,7 +8,7 @@ def create_trip(db: Session, trip: schemas.TripCreate):
     user = db.query(models.User).filter(models.User.user_id == trip.owner_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    db_trip = models.Trip(**trip.dict())
+    db_trip = models.Trip(**trip.model_dump())
     db.add(db_trip)
     db.commit()
     db.refresh(db_trip)

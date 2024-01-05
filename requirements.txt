@@ -8,3 +8,4 @@ bcrypt
 python-multipart
 databases
 aiohttp
+pytest

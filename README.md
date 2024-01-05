@@ -17,11 +17,12 @@ pip
 
 ### Installation
 
-git clone https://tonurldeprojet.git
-cd tonprojet
-python -m venv mon_env
-source mon_env/bin/activate (pour Unix ou MacOS) ou mon_env\Scripts\activate (pour Windows)
+git clone https://github.com/Fans-de-peches/fisher-fans-api.git
+cd fisher-fans-api
+python -m venv fisher_env
+source fisher_env/bin/activate (pour Unix ou MacOS) ou fisher_env\Scripts\activate (pour Windows)
 pip install -r requirements.txt
+unicorn app.main:app --reload
 
 
 ### Exécution des tests

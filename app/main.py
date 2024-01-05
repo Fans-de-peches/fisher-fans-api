@@ -2,6 +2,9 @@ from fastapi import Depends, FastAPI
 from .routes.v1 import router as v1_router
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
+from fastapi.security import OAuth2PasswordBearer
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 app = FastAPI()
 

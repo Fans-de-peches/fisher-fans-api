@@ -6,7 +6,7 @@ from datetime import datetime
 
 def create_boat(db: Session, boat: schemas.BoatCreate):
     try:
-        boat_data = boat.dict()
+        boat_data = boat.model_dump()
         user = db.query(models.User).filter(models.User.user_id == boat.owner_id).first()
         
         if not user:

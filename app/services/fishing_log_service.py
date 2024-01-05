@@ -6,7 +6,7 @@ from datetime import datetime
 
 def create_log(db: Session, log: schemas.FishingLogCreate):
     try:
-        log_data = log.dict()
+        log_data = log.model_dump()
         user = db.query(models.User).filter(models.User.user_id == log.owner_id).first()
         if not user:
             raise HTTPException(status_code=404, detail="User not found")

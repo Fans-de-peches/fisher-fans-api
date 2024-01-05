@@ -6,7 +6,7 @@ from datetime import datetime
 
 def create_booking(db: Session, booking: schemas.BookingCreate):
     try:
-        booking_data = booking.dict()
+        booking_data = booking.model_dump()
         user = db.query(models.User).filter(models.User.user_id == booking.owner_id).first()
         trip = db.query(models.Trip).filter(models.Trip.trip_id == booking.trip_id).first()
         
