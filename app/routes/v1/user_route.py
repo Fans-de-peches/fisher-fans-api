@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from ...services import user_service
+from typing import Annotated
+from ...services import user_service, security_service
 from ... import schemas, database
 from sqlalchemy.orm import Session
 
@@ -22,6 +23,10 @@ def update_user(id: int, user: schemas.UserUpdate, db: Session = Depends(databas
 def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db)):
     users, total = user_service.get_users(db, skip, limit)
     return {"items": users, "total": total}
+
+@router.get("/me", response_model=schemas.User)
+async def read_users_me(current_user: schemas.User = Depends(security_service.get_current_user)):
+    return current_user
 
 @router.get("/{id}", response_model=schemas.User)
 def get_user(id: int, db: Session = Depends(database.get_db)):

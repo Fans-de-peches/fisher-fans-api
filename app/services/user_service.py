@@ -2,10 +2,11 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
+from .security_service import password_hashing
 
 def create_user(db: Session, user: schemas.UserCreate):
     try:
-        hashed_password = "##" + user.password
+        hashed_password = password_hashing(user.password)
 
         # Check if email already exists
         if db.query(models.User).filter(models.User.email == user.email).first():
