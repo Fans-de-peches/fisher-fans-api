@@ -22,7 +22,7 @@ user_data = {
     "activity_type": None,
     "siret_number": None,
     "commerce_registry_number": None,
-    "password": "unMotDePasseSécurisé123"
+    "password": "unMotDePasseSecurise123"
 }
 
 user2_data = {
@@ -43,7 +43,7 @@ user2_data = {
     "activity_type": None,
     "siret_number": None,
     "commerce_registry_number": None,
-    "password": "unMotDePasseSécurisé123"
+    "password": "unMotDePasseSecurise123"
 }
 
 def test_create_user(test_client):
@@ -71,3 +71,36 @@ def test_get_users(test_client):
     assert response.json()["total"] == 2
     assert len(response.json()["items"]) == 2
     assert response.json()["items"][0]["email"] == user_data["email"]
+
+def test_create_token(test_client):
+    response = test_client.post("/api/v1/users/", json=user_data)
+    assert response.status_code == 200
+    
+    response = test_client.post("/auth", json={
+        "email": user_data["email"],
+        "password": user_data["password"]
+    })
+    assert response.status_code == 200
+    assert response.json()["token_type"] == "bearer"
+    assert len(response.json()["access_token"]) > 0
+
+def test_get_current_user(test_client):
+    response = test_client.post("/api/v1/users/", json=user_data)
+    assert response.status_code == 200
+    
+    response = test_client.post("/auth", json={
+        "email": user_data["email"],
+        "password": user_data["password"]
+    })
+    assert response.status_code == 200
+    assert response.json()["token_type"] == "bearer"
+    assert len(response.json()["access_token"]) > 0
+    
+    response = test_client.get("/api/v1/users/me", headers={
+            "Authorization": "Bearer " + response.json()["access_token"]
+        })
+    print(response.json())
+    
+    assert response.status_code == 200
+    assert response.json()["email"] == user_data["email"]
+

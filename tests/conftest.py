@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from app.database import Base, get_db  # Assure-toi d'importer la base de données correctement
 from app.main import app
 # Configuration pour la base de données de test
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test_database.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./tests/test_database.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
