@@ -34,7 +34,7 @@ async def login_for_access_token(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.post("/refresh_token", response_model=Token)
+@router.post("/auth/refresh", response_model=Token)
 async def refresh_access_token(
     current_user: models.User = Depends(security_service.get_current_user)
 ):

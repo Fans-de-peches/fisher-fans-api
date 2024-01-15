@@ -7,7 +7,7 @@ from datetime import datetime
 def create_log(db: Session, log: schemas.FishingLogCreate):
     try:
         log_data = log.model_dump()
-        user = db.query(models.User).filter(models.User.user_id == log.owner_id).first()
+        user = db.query(models.User).filter(models.User.user_id == log.user_id).first()
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         if log_data.get("fishing_date"):
@@ -25,6 +25,22 @@ def get_logs(db: Session, skip: int = 0, limit: int = 100):
 
 def get_log(db: Session, log_id: int):
     return db.query(models.FishingLog).filter(models.FishingLog.log_id == log_id).first()
+
+def get_user_logs(db: Session, user_id: int):
+    logs = db.query(models.FishingLog).filter(models.FishingLog.user_id == user_id).all()
+    return logs, len(logs)
+
+def update_log(db: Session, log_id: int, log: schemas.FishingLogUpdate):
+    db_log = db.query(models.FishingLog).filter(models.FishingLog.log_id == log_id).first()
+    if db_log is None:
+        raise HTTPException(status_code=404, detail="Log not found")
+    
+    for var, value in vars(log).items():
+        if value is not None:
+            setattr(db_log, var, value)
+    db.commit()
+    db.refresh(db_log)
+    return db_log
 
 def delete_log(db: Session, log_id: int):
     log = db.query(models.FishingLog).filter(models.FishingLog.log_id == log_id).first()

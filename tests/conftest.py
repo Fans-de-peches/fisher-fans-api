@@ -16,6 +16,7 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture(scope="session")
 def db_engine():
+    
     Base.metadata.create_all(bind=engine)
     yield engine
     Base.metadata.drop_all(bind=engine)
@@ -46,3 +47,18 @@ def test_client(db_session):
     # Créer un TestClient en utilisant l'application surchargée
     with TestClient(app) as client:
         yield client
+
+def create_user_and_token(client, user_data):
+    response = client.post("/api/v1/users/", json=user_data)
+    assert response.status_code == 200
+    user_id = response.json()["user_id"]
+
+    response = client.post("/auth", json={
+        "email": user_data["email"],
+        "password": user_data["password"]
+    })
+    assert response.status_code == 200
+    token = response.json()["access_token"]
+    assert len(token) > 0
+
+    return token, user_id

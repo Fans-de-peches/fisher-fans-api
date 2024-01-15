@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import field_validator, ConfigDict, BaseModel
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
@@ -27,10 +27,10 @@ class MotorTypeEnum(str, Enum):
 class BoatBase(BaseModel):
     user_id: int
     name: str
-    description: Optional[str]
-    manufacturer: Optional[str]
-    birth_date: Optional[date]
-    image: Optional[str]
+    description: Optional[str] = None
+    manufacturer: Optional[str] = None
+    birth_date: Optional[date] = None
+    image: Optional[str] = None
     license_type: LicenseTypeEnum
     boat_type: BoatTypeEnum
     equipment: List[str]
@@ -39,32 +39,41 @@ class BoatBase(BaseModel):
     sleeping_capacity: int
     home_port: str
     home_city: str
-    coordinate: str
-    motor_type: Optional[MotorTypeEnum]
-    motor_power: Optional[int]
+    longitude: float
+    latitude: float
+    motor_type: Optional[MotorTypeEnum] = None
+    motor_power: Optional[int] = None
     boat_status: BoatStatusEnum
+    model_config = ConfigDict(from_attributes=True)
 
 class BoatCreate(BoatBase):
-    birth_date: Optional[str]
-
-    @validator('birth_date', pre=True)
+    birth_date: Optional[str] = None
+    
+    @field_validator('birth_date', mode="before")
+    @classmethod
     def validate_birth_date(cls, value):
         try:
-            datetime.strptime(value, "%Y-%m-%d")
-            return value
+            if value:
+                datetime.strptime(value, "%Y-%m-%d")
+                return value
+            else:
+                return None
         except ValueError:
             raise ValueError("Invalid birth_date format")
 
-class BoatUpdate(BoatBase):
+class BoatUpdate(BoatCreate):
     pass
 
 class Boat(BoatBase):
     boat_id: int
     created_at: datetime
-    updated_at: Optional[datetime]
+    updated_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+class BoatZone (BaseModel):
+    x_min: float
+    x_max: float
+    y_min: float
+    y_max: float
 
 class BoatList(BaseModel):
     items: List[Boat]

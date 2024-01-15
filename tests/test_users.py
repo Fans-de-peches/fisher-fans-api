@@ -1,106 +1,71 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from app.database import Base, get_db
-from app.main import app  # Remplace par le chemin correct vers ton application FastAPI
-from .conftest import test_client
-
-user_data = {
-    "first_name": "Jean",
-    "last_name": "Dupont",
-    "birth_date": "1990-01-01",
-    "email": "jean.dupont@example.com",
-    "mobile": "0612345678",
-    "address": "123 Rue de la République",
-    "zip_code": 75001,
-    "city": "Paris",
-    "languages": ["français", "anglais"],
-    "avatar_url": "https://exemple.com/avatars/jeandupont.png",
-    "boat_license_number": 123456,
-    "insurance_number": "INS123456789",
-    "status": "particulier",
-    "company_name": None,
-    "activity_type": None,
-    "siret_number": None,
-    "commerce_registry_number": None,
-    "password": "unMotDePasseSecurise123"
-}
-
-user2_data = {
-    "first_name": "John",
-    "last_name": "Doe",
-    "birth_date": "2000-04-01",
-    "email": "john.doe@exemple.com",
-    "mobile": "0612345678",
-    "address": "123 Rue de la République",
-    "zip_code": 75001,
-    "city": "Paris",
-    "languages": ["français", "anglais"],
-    "avatar_url": "https://exemple.com/avatars/johndoe.png",
-    "boat_license_number": 123456,
-    "insurance_number": "INS123456789",
-    "status": "particulier",
-    "company_name": None,
-    "activity_type": None,
-    "siret_number": None,
-    "commerce_registry_number": None,
-    "password": "unMotDePasseSecurise123"
-}
+from app.main import app
+from .conftest import test_client, create_user_and_token
+from .data_tests import user_data, user_2_data, boat_data, boat_2_data
 
 def test_create_user(test_client):
     response = test_client.post("/api/v1/users/", json=user_data)
     assert response.status_code == 200
     assert response.json()["email"] == user_data["email"]
-# Autres assertions si nécessaire
-def test_get_user(test_client):
-    response = test_client.post("/api/v1/users/", json=user_data)
-    assert response.status_code == 200
 
-    response = test_client.get("/api/v1/users/" + str(response.json()["user_id"]))
+def test_get_user(test_client):
+    token, user_id = create_user_and_token(test_client, user_data)
+
+    response = test_client.get("/api/v1/users/" + str(user_id), headers={
+        "Authorization": f"Bearer {token}"
+    })
     assert response.status_code == 200
     assert response.json()["email"] == user_data["email"]
 
 def test_get_users(test_client):
-    response = test_client.post("/api/v1/users/", json=user_data)
+    token, user_id = create_user_and_token(test_client, user_data)
+    
+    response = test_client.post("/api/v1/users/", json=user_2_data)
     assert response.status_code == 200
     
-    response = test_client.post("/api/v1/users/", json=user2_data)
-    assert response.status_code == 200
-
-    response = test_client.get("/api/v1/users/")
+    response = test_client.get("/api/v1/users/", headers={
+        "Authorization": f"Bearer {token}"
+    })
     assert response.status_code == 200
     assert response.json()["total"] == 2
     assert len(response.json()["items"]) == 2
     assert response.json()["items"][0]["email"] == user_data["email"]
 
-def test_create_token(test_client):
-    response = test_client.post("/api/v1/users/", json=user_data)
-    assert response.status_code == 200
-    
-    response = test_client.post("/auth", json={
-        "email": user_data["email"],
-        "password": user_data["password"]
-    })
-    assert response.status_code == 200
-    assert response.json()["token_type"] == "bearer"
-    assert len(response.json()["access_token"]) > 0
-
 def test_get_current_user(test_client):
-    response = test_client.post("/api/v1/users/", json=user_data)
-    assert response.status_code == 200
-    
-    response = test_client.post("/auth", json={
-        "email": user_data["email"],
-        "password": user_data["password"]
-    })
-    assert response.status_code == 200
-    assert response.json()["token_type"] == "bearer"
-    assert len(response.json()["access_token"]) > 0
-    
+    token, user_id = create_user_and_token(test_client, user_data)
+        
     response = test_client.get("/api/v1/users/me", headers={
-            "Authorization": "Bearer " + response.json()["access_token"]
-        })
-    print(response.json())
+        "Authorization": f"Bearer {token}"
+    })
     
     assert response.status_code == 200
     assert response.json()["email"] == user_data["email"]
 
+def test_get_user_lists(test_client):
+    token, user_id = create_user_and_token(test_client, user_data)        
+    boat_data["user_id"] = user_id
+    
+    response = test_client.post("/api/v1/boats/", json=boat_data, headers={
+        "Authorization": f"Bearer {token}"
+    })
+    assert response.status_code == 200
+    assert response.json()["name"] == boat_data["name"]
+
+    response = test_client.get("/api/v1/users/"+ str(user_id) + "/boats/", headers={
+        "Authorization": f"Bearer {token}"
+    })
+    assert response.status_code == 200
+    assert response.json()['total'] == 1
+    assert response.json()['items'][0]["name"] == boat_data["name"]
+
+def test_update_user(test_client):
+    token, user_id = create_user_and_token(test_client, user_data)
+    
+    user_data["first_name"] = "John"
+    user_data["password"] = None
+    
+    response = test_client.put("/api/v1/users/" + str(user_id), json=user_data, headers={
+        "Authorization": f"Bearer {token}"
+    })
+    
+    assert response.status_code == 200
+    assert response.json()["first_name"] == "John"

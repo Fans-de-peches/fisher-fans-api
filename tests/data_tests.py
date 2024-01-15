@@ -1,0 +1,83 @@
+user_data = {
+    "first_name": "Jean",
+    "last_name": "Dupont",
+    "birth_date": "1990-01-01",
+    "email": "jean.dupont@example.com",
+    "mobile": "0612345678",
+    "address": "123 Rue de la République",
+    "zip_code": 75001,
+    "city": "Paris",
+    "languages": ["français", "anglais"],
+    "avatar_url": "https://exemple.com/avatars/jeandupont.png",
+    "boat_license_number": 123456,
+    "insurance_number": "INS123456789",
+    "status": "particulier",
+    "company_name": None,
+    "activity_type": None,
+    "siret_number": None,
+    "commerce_registry_number": None,
+    "password": "unMotDePasseSecurise123"
+}
+
+user_2_data = {
+    "first_name": "John",
+    "last_name": "Doe",
+    "birth_date": "2000-04-01",
+    "email": "john.doe@exemple.com",
+    "mobile": "0612345678",
+    "address": "123 Rue de la République",
+    "zip_code": 75001,
+    "city": "Paris",
+    "languages": ["français", "anglais"],
+    "avatar_url": "https://exemple.com/avatars/johndoe.png",
+    "boat_license_number": 123456,
+    "insurance_number": "INS123456789",
+    "status": "particulier",
+    "company_name": None,
+    "activity_type": None,
+    "siret_number": None,
+    "commerce_registry_number": None,
+    "password": "unMotDePasseSecurise123"
+}
+
+boat_data = {
+    "name": "Nom du bateau",
+    "description": "Une belle description du bateau.",
+    "manufacturer": "Fabricant du bateau",
+    "birth_date": "2020-01-01",
+    "image": "http://exemple.com/image.jpg",
+    "license_type": "cotier",
+    "boat_type": "voilier",
+    "equipment": ["GPS", "VHF", "Gilets de sauvetage"],
+    "deposit_amount": 1500.00,
+    "max_capacity": 10,
+    "sleeping_capacity": 4,
+    "home_port": "Port d'attache",
+    "home_city": "Ville du port d'attache",
+    "longitude": 3.876716,
+    "latitude": 43.610769,
+    "motor_type": "diesel",
+    "motor_power": 500,
+    "boat_status": "active"
+}
+
+boat_2_data = {
+    "name": "Nom du bateau 2",
+    "description": "Une belle description du bateau 2.",
+    "manufacturer": "Fabricant du bateau 2",
+    "birth_date": "2020-01-01",
+    "image": "http://exemple.com/image.jpg",
+    "license_type": "cotier",
+    "boat_type": "voilier",
+    "equipment": ["GPS", "VHF", "Gilets de sauvetage"],
+    "deposit_amount": 1500.00,
+    "max_capacity": 10,
+    "sleeping_capacity": 4,
+    "home_port": "Port d'attache",
+    "home_city": "Ville du port d'attache",
+    "longitude": 43.876716,
+    "latitude": 3.610769,
+    "motor_type": "diesel",
+    "motor_power": 500,
+    "boat_status": "active"
+}

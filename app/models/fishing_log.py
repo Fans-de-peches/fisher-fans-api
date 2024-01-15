@@ -8,7 +8,8 @@ class FishingLog(Base):
     __tablename__ = "fishing_log"
 
     log_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    owner_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('user.user_id'))
+    
     fish_name = Column(String)
     image = Column(String)
     comment = Column(String)

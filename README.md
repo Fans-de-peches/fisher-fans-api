@@ -17,22 +17,23 @@ pip
 
 ### Installation
 
-git clone https://github.com/Fans-de-peches/fisher-fans-api.git
-cd fisher-fans-api
-python -m venv fisher_env
-source fisher_env/bin/activate (pour Unix ou MacOS) ou fisher_env\Scripts\activate (pour Windows)
-pip install -r requirements.txt
-unicorn app.main:app --reload
+`$ git clone https://github.com/Fans-de-peches/fisher-fans-api.git`
+`$ cd fisher-fans-api`
+`$ python -m venv fisher_env`
+`$ source fisher_env/bin/activate` (pour Unix ou MacOS) ou `fisher_env\Scripts\activate` (pour Windows)
+`$ pip install -r requirements.txt`
 
+### Exécution
+`.\fisher_env\Scripts\activate`
+
+Executé en http
+`$ uvicorn app.main:app --reload`
+Executé en https (nécessite la génération des certificats ssl)
+`$ uvicorn app.main:app --reload --ssl-keyfile=./127.0.0.1+1-key.pem --ssl-certfile=./127.0.0.1+1.pem`
 
 ### Exécution des tests
 
-Explique comment exécuter les tests automatisés pour ce système.
-
-
-## Déploiement
-
-Ajoute des notes supplémentaires sur la manière de déployer cela sur un système actif.
+`$ pytest`
 
 ## Construit avec
 
@@ -41,27 +42,11 @@ Ajoute des notes supplémentaires sur la manière de déployer cela sur un syst�
 * [SQLite](https://www.sqlite.org/index.html) - Base de données utilisée
 * [Pydantic](https://pydantic-docs.helpmanual.io/) - Gestion de la validation des données
 * [python-jose](https://python-jose.readthedocs.io/en/latest/) - Authentification JWT
-* [bcrypt](https://pypi.org/project/bcrypt/) - Hachage des mots de passe
-
-## Contribuer
-
-Veuillez lire [CONTRIBUTING.md](https://tonurldeprojet/CONTRIBUTING.md) pour des détails sur notre code de conduite, et le processus pour soumettre des pull requests.
-
-## Versioning
-
-Nous utilisons [SemVer](http://semver.org/) pour le versionnement. Pour les versions disponibles, voir les [tags sur ce repository](https://tonurldeprojet/tags). 
+* [pytest](https://docs.pytest.org/en/stable/) - Framework de test
 
 ## Auteurs
 
-* **Ton Nom** - *Travail Initial* - [TonProfilGithub](https://github.com/tonprofil)
-
-Voir aussi la liste des [contributeurs](https://tonurldeprojet/contributors) qui ont participé à ce projet.
-
-## Licence
-
-Ce projet est licencié sous la Licence MIT - voir le fichier [LICENSE.md](LICENSE.md) pour plus de détails.
-
-## Remerciements
-
-* Remercie les personnes qui t'ont aidé
-* Si tu t'es inspiré de quelque chose, crédite-le ici
+* **Matisse Moni** - *Travail Initial* - [Github](https://github.com/MatisseMoni)
+* **Gabriel Rivas** - *Documentation* - [Github](https://github.com/RivasGabriel)
+* **Winston Pelletier** - *Documentation* - [Github](https://github.com/Ninwost)
+* **Julien Pessione** - *Documentation* - [Github](https://github.com/PessioneJulien)

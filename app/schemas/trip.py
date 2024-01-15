@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import field_validator, ConfigDict, BaseModel
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
@@ -13,28 +13,30 @@ class CostTypeEnum(str, Enum):
 
 # Trip Schemas
 class TripBase(BaseModel):
+    user_id: int
     title: str
-    infos: Optional[str]
+    infos: Optional[str] = None
     trip_type: TripTypeEnum
     cost_type: CostTypeEnum
     date: List[str]
     hours: List[str]
     capacity: int
     cost: float
-    owner_id: int
 
 class TripCreate(TripBase):
-    date: Optional[List[str]]  # Accepte une chaîne JSON représentant une liste de dates
-    hours: Optional[List[str]]  # Accepte une chaîne JSON représentant une liste d'heures
+    date: Optional[List[str]] = None  # Accepte une chaîne JSON représentant une liste de dates
+    hours: Optional[List[str]] = None  # Accepte une chaîne JSON représentant une liste d'heures
 
-    @validator('date')
+    @field_validator('date')
+    @classmethod
     def validate_date(cls, v):
         if v:
             return v
         else:
             return []
     
-    @validator('hours')
+    @field_validator('hours')
+    @classmethod
     def validate_hours(cls, v):
         if v:
             return v
@@ -47,10 +49,8 @@ class TripUpdate(TripBase):
 class Trip(TripBase):
     trip_id: int
     created_at: datetime
-    updated_at: Optional[datetime]
-
-    class Config:
-        from_attributes = True
+    updated_at: Optional[datetime] = None
+    model_config = ConfigDict(from_attributes=True)
 
 class TripList(BaseModel):
     items: List[Trip]

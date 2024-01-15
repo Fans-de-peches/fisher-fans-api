@@ -1,14 +1,14 @@
-from pydantic import BaseModel, validator
+from pydantic import field_validator, ConfigDict, BaseModel
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
 
 # FishingLog Schemas
 class FishingLogBase(BaseModel):
-    owner_id: int
+    user_id: int
     fish_name: str
-    image: Optional[str]
-    comment: Optional[str]
+    image: Optional[str] = None
+    comment: Optional[str] = None
     height: float
     weight: float
     fishing_place: str
@@ -16,9 +16,10 @@ class FishingLogBase(BaseModel):
     leaved: bool
 
 class FishingLogCreate(FishingLogBase):
-    fishing_date: Optional[str]
+    fishing_date: Optional[str] = None
 
-    @validator('fishing_date', pre=True)
+    @field_validator('fishing_date', mode="before")
+    @classmethod
     def validate_fishing_date(cls, value):
         try:
             datetime.strptime(value, "%Y-%m-%d")
@@ -32,10 +33,8 @@ class FishingLogUpdate(FishingLogBase):
 class FishingLog(FishingLogBase):
     log_id: int
     created_at: datetime
-    updated_at: Optional[datetime]
-
-    class Config:
-        from_attributes = True
+    updated_at: Optional[datetime] = None
+    model_config = ConfigDict(from_attributes=True)
 
 class FishingLogList(BaseModel):    
     items: List[FishingLog]

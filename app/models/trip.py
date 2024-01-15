@@ -8,6 +8,9 @@ class Trip(Base):
     __tablename__ = "trip"
 
     trip_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('user.user_id'))
+    boat_id = Column(Integer, ForeignKey('boat.boat_id'))
+
     title = Column(String)
     infos = Column(String)
     trip_type = Column(Enum('daily', 'recurrent'))
@@ -16,7 +19,9 @@ class Trip(Base):
     hours = Column(JSON)
     capacity = Column(Integer)
     cost = Column(Float)
-    owner_id = Column(Integer, ForeignKey('user.user_id'))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.datetime.utcnow)
+    
     owner = relationship("User", back_populates="trips")
+    bookings = relationship("Booking", back_populates="trip")
+    boat = relationship("Boat", back_populates="trips")

@@ -29,9 +29,17 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     total = db.query(models.User).count()
     return users, total
 
-def update_user(db: Session, id: int, user: schemas.UserUpdate):
-    ...
-
+def put_user(db: Session, id: int, user: schemas.UserUpdate):
+    db_user = db.query(models.User).filter(models.User.user_id == id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    else:
+        for var, value in vars(user).items():
+            if value is not None:
+                setattr(db_user, var, value)
+        db.commit()
+        db.refresh(db_user)
+        return db_user
 
 def delete_user(db: Session, user_id: int):
     user = db.query(models.User).filter(models.User.user_id == user_id).first()

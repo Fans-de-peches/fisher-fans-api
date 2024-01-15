@@ -1,20 +1,21 @@
-from pydantic import BaseModel, validator
+from pydantic import field_validator, ConfigDict, BaseModel
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
 
 # Booking Schemas
 class BookingBase(BaseModel):
+    user_id: int
     trip_id: int
     date: date
     reserved_users: int
     total_cost: float
-    owner_id: int
 
 class BookingCreate(BookingBase):
-    date: Optional[str]
+    date: Optional[str] = None
     
-    @validator('date', pre=True)
+    @field_validator('date', mode="before")
+    @classmethod
     def validate_date(cls, value):
         try:
             datetime.strptime(value, "%Y-%m-%d")
@@ -28,10 +29,8 @@ class BookingUpdate(BookingBase):
 class Booking(BookingBase):
     booking_id: int
     created_at: datetime
-    updated_at: Optional[datetime]
-
-    class Config:
-        from_attributes = True
+    updated_at: Optional[datetime] = None
+    model_config = ConfigDict(from_attributes=True)
 
 class BookingList(BaseModel):
     items: List[Booking]
