@@ -15,7 +15,7 @@ def create_trip(trip: schemas.TripCreate, db: Session = Depends(database.get_db)
 
 @router.put("/{id}", response_model=schemas.Trip)
 def update_trip(id: int, trip: schemas.TripUpdate, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(security_service.get_current_user)):
-    trip = trip_service.put_trip(db, id, trip)
+    trip = trip_service.update_trip(db, id, trip)
     return trip
 
 @router.get("/", response_model=schemas.TripList)

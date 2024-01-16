@@ -1,3 +1,4 @@
+# Users
 user_data = {
     "first_name": "Jean",
     "last_name": "Dupont",
@@ -40,6 +41,7 @@ user_2_data = {
     "password": "unMotDePasseSecurise123"
 }
 
+# Boats
 boat_data = {
     "name": "Nom du bateau",
     "description": "Une belle description du bateau.",
@@ -80,4 +82,63 @@ boat_2_data = {
     "motor_type": "diesel",
     "motor_power": 500,
     "boat_status": "active"
+}
+
+# Trips
+trip_data = {
+    "title": "Titre du voyage",
+    "infos": "Des informations sur le voyage",
+    "trip_type": "daily",
+    "cost_type": "global",
+    "date": ["2020-01-01"],
+    "hours": ["10:00", "12:00"],
+    "capacity": 10,
+    "cost": 100.00
+}
+
+trip_2_data = {
+    "title": "Titre du voyage 2",
+    "infos": "Des informations sur le voyage 2",
+    "trip_type": "daily",
+    "cost_type": "global",
+    "date": ["2020-01-01"],
+    "hours": ["10:00", "12:00"],
+    "capacity": 10,
+    "cost": 100.00
+}
+
+# Bookings
+booking_data = {
+    "date_dispo": "2020-01-01",
+    "reserved_users": 1,
+    "total_cost": 100.00
+}
+
+booking_2_data = {
+    "date_dispo": "2020-01-01",
+    "reserved_users": 1,
+    "total_cost": 100.00
+}
+
+# Fishing Logs
+fishing_log_data = {
+    "fish_name": "Nom du poisson",
+    "image": "http://exemple.com/image.jpg",
+    "comment": "Un commentaire sur la prise",
+    "height": 50.00,
+    "weight": 10.00,
+    "fishing_place": "Lieu de la prise",
+    "fishing_date": "2020-01-01",
+    "leaved": False
+}
+
+fishing_log_2_data = {
+    "fish_name": "Nom du poisson 2",
+    "image": "http://exemple.com/image.jpg",
+    "comment": "Un commentaire sur la prise 2",
+    "height": 50.00,
+    "weight": 10.00,
+    "fishing_place": "Lieu de la prise 2",
+    "fishing_date": "2020-01-01",
+    "leaved": False
 }

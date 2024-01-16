@@ -44,7 +44,24 @@ class TripCreate(TripBase):
             return []
 
 class TripUpdate(TripBase):
-    pass
+    date: Optional[List[str]] = None  # Accepte une chaîne JSON représentant une liste de dates
+    hours: Optional[List[str]] = None  # Accepte une chaîne JSON représentant une liste d'heures
+    
+    @field_validator('date')
+    @classmethod
+    def validate_date(cls, v):
+        if v:
+            return v
+        else:
+            return []
+    
+    @field_validator('hours')
+    @classmethod
+    def validate_hours(cls, v):
+        if v:
+            return v
+        else:
+            return []
 
 class Trip(TripBase):
     trip_id: int

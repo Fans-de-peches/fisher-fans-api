@@ -11,7 +11,7 @@ class Booking(Base):
     trip_id = Column(Integer, ForeignKey('trip.trip_id'))
     user_id = Column(Integer, ForeignKey('user.user_id'))
     
-    date_ = Column(Date)
+    date_dispo = Column(Date)
     reserved_users = Column(Integer)
     total_cost = Column(Float)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)

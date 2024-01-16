@@ -7,14 +7,14 @@ from enum import Enum
 class BookingBase(BaseModel):
     user_id: int
     trip_id: int
-    date: date
+    date_dispo: date
     reserved_users: int
     total_cost: float
 
 class BookingCreate(BookingBase):
-    date: Optional[str] = None
+    date_dispo: Optional[str] = None
     
-    @field_validator('date', mode="before")
+    @field_validator('date_dispo', mode="before")
     @classmethod
     def validate_date(cls, value):
         try:
