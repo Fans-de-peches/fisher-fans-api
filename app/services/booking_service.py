@@ -16,11 +16,6 @@ def create_booking(db: Session, booking: schemas.BookingCreate):
         if not trip:
             raise HTTPException(status_code=404, detail="Trip not found")
         
-        has_boat = db.query(models.Boat).filter(models.Boat.user_id == user.user_id).first() 
-        
-        if not has_boat:
-            raise HTTPException(status_code=404, detail="User don\'t has boat found")
-        
         if booking_data.get("date_dispo"):
             booking_data["date_dispo"] = datetime.strptime(booking_data["date_dispo"], "%Y-%m-%d").date()
         

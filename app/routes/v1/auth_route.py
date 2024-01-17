@@ -6,7 +6,7 @@ from ...schemas.token import Token, UserCredentials
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import timedelta
 
-router = APIRouter(tags=["Authentication"])
+router = APIRouter(tags=["Authentication"], prefix="/api")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

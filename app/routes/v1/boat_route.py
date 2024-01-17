@@ -24,7 +24,9 @@ def get_boats(skip: int = 0, limit: int = 100, db: Session = Depends(database.ge
     return {"items": boats, "total": total}
 
 @router.get("/search_zone", response_model=schemas.BoatList)
-def get_boats_by_zone(x_min:float = 0, x_max:float = 0, y_min:float = 0, y_max:float = 0, skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(security_service.get_current_user)):
+def get_boats_by_zone(x_min:float = 0, x_max:float = 0, y_min:float = 0, y_max:float = 0, 
+        skip: int = 0, limit: int = 100,
+        db: Session = Depends(database.get_db), current_user: schemas.User = Depends(security_service.get_current_user)):
     zone = schemas.BoatZone(x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max)
     boats, total = boat_service.get_boats_by_zone(db, zone, skip, limit)
     return {"items": boats, "total": total}

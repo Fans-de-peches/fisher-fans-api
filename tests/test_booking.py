@@ -3,7 +3,7 @@ from .conftest import test_client, create_user_and_token, create_trip, create_bo
 from .data_tests import user_data, user_2_data, booking_data, booking_2_data, trip_data, trip_2_data, boat_data, boat_2_data
 
 def test_create_booking(test_client):
-    token, user_id, trip_id = create_trip(test_client, trip_data, user_data)
+    token, user_id, trip_id = create_trip(test_client, trip_data, boat_data, user_data)
     boat_data["user_id"] = user_id
     reponse = test_client.post("/api/v1/boats/", json=boat_data, headers={
         "Authorization": f"Bearer {token}"
@@ -21,7 +21,7 @@ def test_create_booking(test_client):
     assert response.json()["date_dispo"] == booking_data["date_dispo"]
 
 def test_get_bookings(test_client):
-    token, user_id, trip_id = create_trip(test_client, trip_data, user_data)
+    token, user_id, trip_id = create_trip(test_client, trip_data, boat_data, user_data)
     boat_data["user_id"] = user_id
     reponse = test_client.post("/api/v1/boats/", json=boat_data, headers={
         "Authorization": f"Bearer {token}"
@@ -47,7 +47,7 @@ def test_get_bookings(test_client):
     assert response.json()["items"][0]["date_dispo"] == booking_data["date_dispo"]
 
 def test_get_booking(test_client):
-    token, user_id, trip_id = create_trip(test_client, trip_data, user_data)
+    token, user_id, trip_id = create_trip(test_client, trip_data, boat_data, user_data)
     boat_data["user_id"] = user_id
     reponse = test_client.post("/api/v1/boats/", json=boat_data, headers={
         "Authorization": f"Bearer {token}"
@@ -74,7 +74,7 @@ def test_get_booking(test_client):
     assert response.json()["date_dispo"] == booking_data["date_dispo"]
 
 def test_get_user_bookings(test_client):
-    token, user_id, trip_id = create_trip(test_client, trip_data, user_data)
+    token, user_id, trip_id = create_trip(test_client, trip_data, boat_data, user_data)
     boat_data["user_id"] = user_id
     reponse = test_client.post("/api/v1/boats/", json=boat_data, headers={
         "Authorization": f"Bearer {token}"
@@ -100,7 +100,7 @@ def test_get_user_bookings(test_client):
     assert response.json()["items"][0]["date_dispo"] == booking_data["date_dispo"]
 
 def test_put_booking(test_client):
-    token, user_id, trip_id = create_trip(test_client, trip_data, user_data)
+    token, user_id, trip_id = create_trip(test_client, trip_data, boat_data, user_data)
     boat_data["user_id"] = user_id
     reponse = test_client.post("/api/v1/boats/", json=boat_data, headers={
         "Authorization": f"Bearer {token}"
@@ -130,7 +130,7 @@ def test_put_booking(test_client):
     assert response.json()["date_dispo"] == booking_2_data["date_dispo"]
 
 def test_delete_booking(test_client):
-    token, user_id, trip_id = create_trip(test_client, trip_data, user_data)
+    token, user_id, trip_id = create_trip(test_client, trip_data, boat_data, user_data)
     boat_data["user_id"] = user_id
     reponse = test_client.post("/api/v1/boats/", json=boat_data, headers={
         "Authorization": f"Bearer {token}"

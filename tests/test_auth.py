@@ -6,7 +6,7 @@ def test_create_token(test_client):
     response = test_client.post("/api/v1/users/", json=user_data)
     assert response.status_code == 200
     
-    response = test_client.post("/auth", json={
+    response = test_client.post("/api/auth", json={
         "email": user_data["email"],
         "password": user_data["password"]
     })
@@ -18,7 +18,7 @@ def test_create_token_invalid_credentials(test_client):
     response = test_client.post("/api/v1/users/", json=user_data)
     assert response.status_code == 200
     
-    response = test_client.post("/auth", json={
+    response = test_client.post("/api/auth", json={
         "email": user_data["email"],
         "password": "invalid_password"
     })
@@ -29,7 +29,7 @@ def test_refresh_token(test_client):
     response = test_client.post("/api/v1/users/", json=user_data)
     assert response.status_code == 200
     
-    response = test_client.post("/auth", json={
+    response = test_client.post("/api/auth", json={
         "email": user_data["email"],
         "password": user_data["password"]
     })
@@ -37,7 +37,7 @@ def test_refresh_token(test_client):
     assert response.json()["token_type"] == "bearer"
     assert len(response.json()["access_token"]) > 0
     
-    response = test_client.post("/auth/refresh", headers={
+    response = test_client.post("/api/auth/refresh", headers={
         "Authorization": "Bearer " + response.json()["access_token"]
     })
     assert response.status_code == 200
@@ -48,7 +48,7 @@ def test_refresh_token_invalid_credentials(test_client):
     response = test_client.post("/api/v1/users/", json=user_data)
     assert response.status_code == 200
     
-    response = test_client.post("/auth", json={
+    response = test_client.post("/api/auth", json={
         "email": user_data["email"],
         "password": user_data["password"]
     })
@@ -56,7 +56,7 @@ def test_refresh_token_invalid_credentials(test_client):
     assert response.json()["token_type"] == "bearer"
     assert len(response.json()["access_token"]) > 0
     
-    response = test_client.post("/auth/refresh", headers={
+    response = test_client.post("/api/auth/refresh", headers={
         "Authorization": "Bearer " + response.json()["access_token"] + "invalid"
     })
     assert response.status_code == 401

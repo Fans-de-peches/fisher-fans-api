@@ -8,6 +8,11 @@ def create_trip(db: Session, trip: schemas.TripCreate):
     user = db.query(models.User).filter(models.User.user_id == trip.user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+    
+    has_boat = db.query(models.Boat).filter(models.Boat.user_id == user.user_id).first() 
+    
+    if not has_boat:
+        raise HTTPException(status_code=404, detail="User don\'t has boat found")
     db_trip = models.Trip(**trip.model_dump())
     db.add(db_trip)
     db.commit()

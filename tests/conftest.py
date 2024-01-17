@@ -55,7 +55,7 @@ def create_user_and_token(client, user_data = user_data):
     assert response.status_code == 200
     user_id = response.json()["user_id"]
 
-    response = client.post("/auth", json={
+    response = client.post("/api/auth", json={
         "email": user_data["email"],
         "password": user_data["password"]
     })
@@ -80,8 +80,8 @@ def create_boat(client, boat_data, user_data = user_data):
     boat_id = reponse.json()["boat_id"]
     return token, user_id, boat_id
 
-def create_trip(client, trip_data = trip_data, user_data = user_data):
-    token, user_id = create_user_and_token(client, user_data)
+def create_trip(client, trip_data = trip_data, boat_data = boat_data , user_data = user_data):
+    token, user_id, boat_id = create_boat(client, boat_data , user_data)
     
     trip_data["user_id"] = user_id
     
@@ -95,8 +95,8 @@ def create_trip(client, trip_data = trip_data, user_data = user_data):
     trip_id = reponse.json()["trip_id"]
     return token, user_id, trip_id
 
-def create_booking(client, booking_data = booking_data, trip_data = trip_data, user_data = user_data):
-    token, user_id, trip_id = create_trip(client, trip_data, user_data)
+def create_booking(client, booking_data = booking_data, trip_data = trip_data, boat_data = boat_data, user_data = user_data):
+    token, user_id, trip_id = create_trip(client, trip_data, boat_data, user_data)
     
     booking_data["user_id"] = user_id
     booking_data["trip_id"] = trip_id
