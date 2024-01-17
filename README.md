@@ -1,52 +1,83 @@
-# fisher-fans-api
-
-Une brève description de ce que fait ton projet.
+# Fisher Fans API
 
 ## Description
 
-Fournis une description plus détaillée de ton projet. Explique ce que fait ton API, pourquoi elle a été créée, et quels problèmes elle résout.
+Fisher Fans API est une plateforme innovante conçue pour connecter les passionnés de pêche. Elle permet aux utilisateurs de gérer leurs sorties de pêche, de réserver des bateaux et de suivre leurs prises, le tout à partir d'une interface simple et intuitive.
 
 ## Commencer
 
-Ces instructions te permettront d'obtenir une copie du projet en cours d'exécution sur ta machine locale à des fins de développement et de test.
+Ces instructions vous aideront à configurer le projet pour le développement et les tests.
 
 ### Prérequis
 
-Python 3.8
-pip
+- Python 3.8+
+- pip
 
 ### Installation
 
-`$ git clone https://github.com/Fans-de-peches/fisher-fans-api.git`
-`$ cd fisher-fans-api`
-`$ python -m venv fisher_env`
-`$ source fisher_env/bin/activate` (pour Unix ou MacOS) ou `fisher_env\Scripts\activate` (pour Windows)
-`$ pip install -r requirements.txt`
+Clonez le projet, créez un environnement virtuel et installez les dépendances :
+
+```bash
+git clone https://github.com/Fans-de-peches/fisher-fans-api.git
+cd fisher-fans-api
+python -m venv fisher_env
+# Unix ou MacOS
+source fisher_env/bin/activate
+# Windows
+fisher_env\Scripts\activate
+pip install -r requirements.txt
+```
 
 ### Exécution
-`.\fisher_env\Scripts\activate`
 
-Executé en http
-`$ uvicorn app.main:app --reload`
-Executé en https (nécessite la génération des certificats ssl)
-`$ uvicorn app.main:app --reload --ssl-keyfile=./127.0.0.1+1-key.pem --ssl-certfile=./127.0.0.1+1.pem`
+Pour lancer le serveur :
 
-### Exécution des tests
+```bash
+# En HTTP
+uvicorn app.main:app --reload
+# En HTTPS (nécessite des certificats SSL)
+uvicorn app.main:app --reload --ssl-keyfile=./path-to-key.pem --ssl-certfile=./path-to-cert.pem
+```
 
-`$ pytest`
+### Exécution des Tests
 
-## Construit avec
+Exécutez les tests avec pytest :
 
-* [FastAPI](https://fastapi.tiangolo.com/) - Le framework web utilisé
-* [SQLAlchemy](https://www.sqlalchemy.org/) - ORM et gestionnaire de base de données
-* [SQLite](https://www.sqlite.org/index.html) - Base de données utilisée
-* [Pydantic](https://pydantic-docs.helpmanual.io/) - Gestion de la validation des données
-* [python-jose](https://python-jose.readthedocs.io/en/latest/) - Authentification JWT
-* [pytest](https://docs.pytest.org/en/stable/) - Framework de test
+```bash
+pytest
+```
+
+## Création de Certificats SSL avec mkcert
+
+Pour sécuriser votre API en local avec HTTPS, vous pouvez créer des certificats SSL en utilisant mkcert. Suivez ces étapes :
+
+1. **Installer mkcert** :
+   - Installez mkcert sur votre système. Pour les instructions spécifiques à votre OS, consultez [la documentation mkcert](https://github.com/FiloSottile/mkcert).
+
+2. **Créer un Certificat Local** :
+   - Exécutez `mkcert -install` pour installer une autorité de certification locale.
+   - Créez un certificat pour votre domaine local (par exemple, `localhost`) avec `mkcert localhost`.
+
+3. **Configurer le Serveur** :
+   - Utilisez les fichiers de certificat générés pour configurer votre serveur (par exemple, uvicorn) avec HTTPS.
+
+Cette méthode vous permet de tester votre application en local avec une connexion HTTPS sécurisée.
+
+## Construit Avec
+
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
+- [SQLite](https://www.sqlite.org/index.html)
+- [Pydantic](https://pydantic-docs.helpmanual.io/)
+- [python-jose](https://python-jose.readthedocs.io/en/latest/)
+- [passlib](https://passlib.readthedocs.io/en/stable/)
+- [pytest](https://docs.pytest.org/en/stable/)
 
 ## Auteurs
 
-* **Matisse Moni** - *Travail Initial* - [Github](https://github.com/MatisseMoni)
-* **Gabriel Rivas** - *Documentation* - [Github](https://github.com/RivasGabriel)
-* **Winston Pelletier** - *Documentation* - [Github](https://github.com/Ninwost)
-* **Julien Pessione** - *Documentation* - [Github](https://github.com/PessioneJulien)
+- **Matisse Moni** - [Github](https://github.com/MatisseMoni)
+- **Gabriel Rivas** - [Github](https://github.com/RivasGabriel)
+- **Winston Pelletier** - [Github](https://github.com/Ninwost)
+- **Julien Pessione** - [Github](https://github.com/PessioneJulien)
+
+---
