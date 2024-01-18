@@ -25,7 +25,7 @@ class MotorTypeEnum(str, Enum):
 
 # Boat Schemas
 class BoatBase(BaseModel):
-    user_id: int
+    user_id: int | None
     name: str
     description: Optional[str] = None
     manufacturer: Optional[str] = None

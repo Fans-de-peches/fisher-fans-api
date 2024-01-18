@@ -26,7 +26,7 @@ def create_boat(db: Session, boat: schemas.BoatCreate):
         raise HTTPException(status_code=400, detail="Boat already exists")
 
 def get_boats(db: Session, skip: int = 0, limit: int = 100):
-    boats = db.query(models.Boat).offset(skip).limit(limit).all()
+    boats = db.query(models.Boat).filter(models.Boat.user_id is not None).offset(skip).limit(limit).all()
     return boats, db.query(models.Boat).count()
 
 def get_boats_by_zone(db: Session, zone: schemas.BoatZone, skip: int = 0, limit: int = 100):

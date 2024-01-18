@@ -5,7 +5,7 @@ from enum import Enum
 
 # Booking Schemas
 class BookingBase(BaseModel):
-    user_id: int
+    user_id: int | None
     trip_id: int
     date_dispo: date
     reserved_users: int

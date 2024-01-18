@@ -13,7 +13,7 @@ class CostTypeEnum(str, Enum):
 
 # Trip Schemas
 class TripBase(BaseModel):
-    user_id: int
+    user_id: int | None
     title: str
     infos: Optional[str] = None
     trip_type: TripTypeEnum

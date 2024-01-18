@@ -5,7 +5,7 @@ from enum import Enum
 
 # FishingLog Schemas
 class FishingLogBase(BaseModel):
-    user_id: int
+    user_id: int | None
     fish_name: str
     image: Optional[str] = None
     comment: Optional[str] = None
