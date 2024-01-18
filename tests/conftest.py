@@ -80,7 +80,7 @@ def create_boat(client, boat_data, user_data = user_data):
     boat_id = reponse.json()["boat_id"]
     return token, user_id, boat_id
 
-def create_trip(client, trip_data = trip_data, boat_data = boat_data , user_data = user_data):
+def create_trip(client, trip_data = trip_data, boat_data = boat_data, user_data = user_data):
     token, user_id, boat_id = create_boat(client, boat_data , user_data)
     
     trip_data["user_id"] = user_id

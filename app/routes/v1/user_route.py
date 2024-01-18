@@ -21,17 +21,17 @@ def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(database.ge
     users, total = user_service.get_users(db, skip, limit)
     return {"items": users, "total": total}
 
-@router.get("/me", response_model=schemas.User)
-async def read_users_me(current_user: schemas.User = Depends(security_service.get_current_user)):
-    return current_user
-
 @router.get("/me/all", response_model=schemas.UserAllLists)
-async def read_users_me_all(current_user: schemas.User = Depends(security_service.get_current_user)):
+async def read_users_me_all(db: Session = Depends(database.get_db), current_user: schemas.User = Depends(security_service.get_current_user)):
     boats, total_boats = boat_service.get_user_boats(db, current_user.user_id)
     trips, total_trips = trip_service.get_user_trips(db, current_user.user_id)
     bookings, total_bookings = booking_service.get_user_bookings(db, current_user.user_id)
     fishing_logs, total_fishing_logs = fishing_log_service.get_user_logs(db, current_user.user_id)
     return {"boats": {"items": boats, "total": total_boats}, "trips": {"items": trips, "total": total_trips}, "bookings": {"items": bookings, "total": total_bookings}, "fishing_logs": {"items": fishing_logs, "total": total_fishing_logs}}
+
+@router.get("/me", response_model=schemas.User)
+async def read_users_me(current_user: schemas.User = Depends(security_service.get_current_user)):
+    return current_user
 
 @router.get("/{id}", response_model=schemas.User)
 def get_user(id: int, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(security_service.get_current_user)):
